@@ -16,6 +16,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from '../../context/authContext.jsx';
 import Update from "../../components/update/Update.jsx";
 
+
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
 
@@ -27,7 +28,8 @@ const Profile = () => {
     queryKey: ["user"], queryFn: () =>
       makeRequest.get("/users/find" + userId).then((res) => {
         return res.data;
-      })
+      }
+      )
   });
 
   const { isLoading: rIsLoading, data: relationshipData } = useQuery({
@@ -59,10 +61,10 @@ const Profile = () => {
     <div className='profile'>
       {isLoading ? ("loading") : (
         <>
-          <div className="images">
+          {/* <div className="images">
             <img src={"/upload/" + data.coverPic} alt="" className="cover" />
             <img src={"/upload/" + data.profilePic} alt="" className="profilePic" />
-          </div>
+          </div> */}
           <div className="profileContainer">
             <div className="uInfo">
               <div className="left">

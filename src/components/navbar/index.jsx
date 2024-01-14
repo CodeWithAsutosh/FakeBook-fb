@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { AuthContext } from '../../context/authContext';
+const userId = JSON.parse(localStorage.getItem('userId'));
+// const accessToken = JSON.parse(localStorage.getItem('token'));
 
 const Navbar = () => {
 
@@ -34,7 +36,9 @@ const Navbar = () => {
         </div>
       </div>
       <div className='right'>
-        <PersonOutlinedIcon/>
+        <Link to={`/profile/${userId}`}>
+        <PersonOutlinedIcon />
+        </Link>
         <EmailOutlinedIcon/>
         <NotificationsOutlinedIcon/>
         <div className="user">

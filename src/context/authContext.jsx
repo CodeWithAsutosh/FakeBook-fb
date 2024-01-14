@@ -5,14 +5,18 @@ const baseURL = process.env.REACT_APP_BASE_URL;
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  const [currentUserID, setCurrentUserID] = useState(
+    JSON.parse(localStorage.getItem("userId")) || null
+  );
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
+    JSON.parse(localStorage.getItem("token")) || null
   );
 
   const login = async (inputs) => {
     try {
       const res = await axios.post(`${baseURL}/users/login`, inputs);
-      setCurrentUser(res.data.token);
+      setCurrentUserID(res.data.data.userId);
+      setCurrentUser(res.data.data.token);
       return res.data;
     } catch (err) {
       if (err.response && err.response.data.status === false) {
@@ -22,8 +26,9 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(currentUser));
-  }, [currentUser]);
+    localStorage.setItem("userId", JSON.stringify(currentUserID));
+    localStorage.setItem("token", JSON.stringify(currentUser));
+  }, [currentUser, currentUserID]);
 
   return (
     <AuthContext.Provider value={{ currentUser, login }}>
